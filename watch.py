@@ -7,12 +7,11 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 def wait_overs():
-	while not os.path.exists('/data/GID/gid.num'):
-		time.sleep(2)
-
-	while not os.path.exists('/data/GID/gid.ready'):
-		time.sleep(2)
-
+    while not os.path.exists('/data/GID/gid.num'):
+        time.sleep(2)
+    while not os.path.exists('/data/GID/gid.ready'):
+        time.sleep(2)
+        
 def get_group(name):
     x = []
     cmd = 'getent group "{0}"'.format(name)
@@ -37,12 +36,12 @@ class Handler(FileSystemEventHandler):
         FileSystemEventHandler.__init__(self)
         self.num = num
         self.path = path
-		self.simple = simple
+    self.simple = simple
 
     def on_created(self, event):
-		if not self.simple and self.path:
-			set_chmod(self.path)
-			set_chown(self.num, self.path)
+        if not self.simple and self.path:
+            set_chmod(self.path)
+            set_chown(self.num, self.path)
         print(event, file=sys.stdout)
 
     def on_deleted(self, event):
@@ -63,14 +62,14 @@ def start(path, group):
     main(num, path)
 
 if __name__ == '__main__':
-	if len(sys.argv) > 1:
-		wait_overs()
-		if os.path.exists('/data/GID/watch.ready'):
-			n = int(str(open('/data/GID/watch.ready', 'r').read()).replace('\n', ''))
-		else:
-			n = 0
-		open('/data/GID/watch.ready', 'w+').write(str(int(n + 1)))
-		print('I\'m start watch to:', sys.argv[1], sys.argv[2], file=sys.stdout)
-		start(sys.argv[1], sys.argv[2])
-	else:
-		main(None, '/data')
+    if len(sys.argv) > 1:
+        wait_overs()
+        if os.path.exists('/data/GID/watch.ready'):
+            n = int(str(open('/data/GID/watch.ready', 'r').read()).replace('\n', ''))
+        else:
+            n = 0
+        open('/data/GID/watch.ready', 'w+').write(str(int(n + 1)))
+        print('I\'m start watch to:', sys.argv[1], sys.argv[2], file=sys.stdout)
+        start(sys.argv[1], sys.argv[2])
+    else:
+        main(None, '/data')
