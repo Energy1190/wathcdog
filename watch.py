@@ -36,7 +36,7 @@ class Handler(FileSystemEventHandler):
         FileSystemEventHandler.__init__(self)
         self.num = num
         self.path = path
-    self.simple = simple
+        self.simple = simple
 
     def on_created(self, event):
         if not self.simple and self.path:
