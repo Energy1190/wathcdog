@@ -73,4 +73,4 @@ if __name__ == '__main__':
 		print('I\'m start watch to:', sys.argv[1], sys.argv[2], file=sys.stdout)
 		start(sys.argv[1], sys.argv[2])
 	else:
-		main(None, None)
+		main(None, '/data')
