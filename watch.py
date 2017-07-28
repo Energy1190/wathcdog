@@ -39,7 +39,7 @@ class Handler(FileSystemEventHandler):
         self.simple = simple
 
     def on_created(self, event):
-        if not self.simple and self.path:
+        if not self.simple and self.path and self.num:
             set_chmod(self.path)
             set_chown(self.num, self.path)
         print(event, file=sys.stdout)
